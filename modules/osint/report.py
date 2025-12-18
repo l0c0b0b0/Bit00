@@ -90,7 +90,6 @@ class OSINTParser:
                     self.processed_entries.add(line_hash)
                     
                     # Parse the actual log format: 
-                    # [*] [20251108:16.19.21]:ipnet:DNSReconRegisters:agetic.gob.bo:dnsenum: A agetic.gob.bo 190.14.106.3
                     
                     # Remove the initial [*] 
                     if line.startswith('[*] '):
@@ -108,9 +107,9 @@ class OSINTParser:
                     timestamp = match.group(1)  # "20251108:16.19.21"
                     phase = match.group(2)      # "ipnet", "discover", "subdomain"
                     plugin = match.group(3)     # "DNSReconRegisters", "DigEnum", "SpiderfootEmail"
-                    target = match.group(4)     # "agetic.gob.bo", "190.14.106.3", etc.
-                    desc = match.group(5)       # "dnsenum", "domain2ip", "email", "geoinfo", etc.
-                    content = match.group(6)    # "A agetic.gob.bo 190.14.106.3", "jhonnatan.lacoa@agetic.gob.bo", etc.
+                    target = match.group(4)     # 
+                    desc = match.group(5)       # 
+                    content = match.group(6)    # 
                     
                     # Process all OSINT phases
                     osint_entries += 1
@@ -148,7 +147,7 @@ class OSINTParser:
 
     def _process_info(self, plugin, target, content):
         """Process info entries"""
-        # content: "jhonnatan.lacoa@agetic.gob.bo"
+        # 
         email_match = re.search(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', content)
         if email_match:
             email = email_match.group(1)
@@ -176,7 +175,7 @@ class OSINTParser:
 
     def _process_domain2ip(self, plugin, target, content):
         """Process domain to IP mapping entries"""
-        # content: "190.14.106.3-www.agetic.gob.bo"
+        # 
         match = re.search(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s*=>\s*([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})', content)
         if match:
             ip, hostname = match.groups()
@@ -202,7 +201,7 @@ class OSINTParser:
 
     def _process_dnsenum(self, plugin, target, content):
         """Process DNS enumeration entries"""
-        # content: "A agetic.gob.bo 190.14.106.3"
+        # 
         base_domain = self._extract_base_domain(target)
         if base_domain:
             entry = {
