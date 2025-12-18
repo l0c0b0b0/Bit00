@@ -317,8 +317,7 @@ class OSINTParser:
             return None
         
         parts = domain.split('.')
-        # For domains like bancontinental.com.py, we want the last 3 parts
-        # For regular domains like example.com, we want the last 2 parts
+
         if len(parts) >= 3:
             # Check if it's a two-part TLD like .com.py, .co.uk, etc.
             if len(parts[-1]) <= 3 and len(parts[-2]) <= 3:
