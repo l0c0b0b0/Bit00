@@ -148,6 +148,8 @@ class netscan:
         secure = any(x in service.lower() for x in ['ssl', 'tls', 'https'])
         
         if secure != True:
+            if service == 'http-proxy':
+                service = 'http'
             scan_plugins = self.setup_scan_plugins(service)    
         
         if service.startswith('ssl/') or service.startswith('tls/'):
