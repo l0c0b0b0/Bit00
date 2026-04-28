@@ -183,7 +183,7 @@ class netscan:
                     )
                 )
             except Exception as e:
-                error("Plugin Scans{plugin} failed on {target}: {_e}", 
+                error("Plugin Scans {plugin} failed on {target}: {_e}", 
                         plugin=plug, target=self.target, _e=str(e))
     
     async def portscan(self):
