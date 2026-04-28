@@ -156,7 +156,8 @@ class netscan:
             if service[4:] == 'http':
                 service = 'https'
             else:    
-                service = service[4:]
+                #service = service[4:]
+                service = 'https'
             
             scan_plugins = self.setup_scan_sslplugins(service)
             
