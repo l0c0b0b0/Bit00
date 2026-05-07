@@ -16,6 +16,6 @@ class NmapTelnet:
     async def run(target, tag, output, service, protocol, port, module):
             
         """Run nmap-telnet scan."""
-        cmd = f"nmap -vv -Pn -sV -p {port} --script=\"banner,telnet-encryption,telnet-ntlm-info\" -oN {output}/scans/{protocol}_{port}_telnet-nmap.txt -oX {output}/scans/xml/{protocol}_{port}_telnet_nmap.xml {target}"
+        cmd = f"nmap -vv -Pn -sV -p {port} --script=\"banner,telnet-encryption,telnet-ntlm-info\" -oN {output}/scans/{protocol}_{port}_telnet_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_telnet_nmap.xml {target}"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
