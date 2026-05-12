@@ -152,7 +152,7 @@ class netscan:
                 service = 'http'
             scan_plugins = self.setup_scan_plugins(service)    
         
-        if service.startswith('ssl/') or service.startswith('tls/'):
+        if service.startswith('ssl/') or service.startswith('tls/') or service.startwith('https-'):
             if service[4:] == 'http':
                 service = 'https'
             else:    
