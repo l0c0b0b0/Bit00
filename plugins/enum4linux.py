@@ -17,6 +17,6 @@ class Enum4linux:
     async def run(self, target, tag, output, service, protocol, port, module):
             
         """Run enum4linux scan."""
-        cmd = f"enum4linux -a -M -l -d {target} 2>&1 | tee {output}/scans/{protocol}_{port}_smb_enum4linux.txt"
+        cmd = f"/usr/bin/enum4linux -a -M -l -d {target} 2>&1 | tee {output}/scans/{protocol}_{port}_smb_enum4linux.txt"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
