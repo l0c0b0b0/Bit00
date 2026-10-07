@@ -17,7 +17,7 @@ class NaabuTCPFull:
     async def run(target, tag, output, module):
 
         """Run nmap scan."""
-        cmd = f"/usr/bin/naabu -host {target} -silent -no-color -c 10 -rate 300 --top-ports full -nmap-cli '-vv -Pn -T4 --open -O --osscan-guess --max-os-tries 5 -sV --traceroute --disable-arp-ping --source-port 53 \
+        cmd = f"/usr/bin/naabu -host {target} -silent -no-color -c 10 -rate 500 --top-ports full -nmap-cli '-vv -Pn -T4 --open -O --osscan-guess --max-os-tries 5 -sV --traceroute --disable-arp-ping --source-port 53 \
 -oG {output}/scans/gnmap/_full_tcp_naabu.gnmap -oN {output}/scans/_full_tcp_naabu.txt -oX {output}/scans/xml/_full_tcp_naabu.xml'"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
