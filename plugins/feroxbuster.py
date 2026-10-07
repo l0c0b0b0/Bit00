@@ -16,6 +16,6 @@ class Feroxbuster:
     async def run(target, tag, output, service, protocol, port, module):
             
         """Run feroxbuster scan."""
-        cmd = f"feroxbuster -u {service}://{target}:{port}/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -t 25 -n -k -v -x txt,html,php,asp,aspx,jsp -o {output}/scans/{protocol}_{port}_{service}_feroxbuster.txt"
+        cmd = f"feroxbuster -u {service}://{target}:{port}/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -t 25 -L 2 -n -k -v -x txt,html,php,asp,aspx,jsp -o {output}/scans/{protocol}_{port}_{service}_feroxbuster.txt"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
