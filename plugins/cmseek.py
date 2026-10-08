@@ -17,6 +17,6 @@ class Cmseek:
     async def run(target, tag, output, service, protocol, port, module):
             
         """Run CMSeek scan."""
-        cmd = f"cmseek --batch --follow-redirect --url {service}://{target}:{port} 2>&1 | tee {output}/scans/{protocol}_{port}_{service}_CMSeek.ansi; cmseek --clear-result"
+        cmd = f"/usr/bin/cmseek --batch --follow-redirect --url {service}://{target}:{port} 2>&1 | tee {output}/scans/{protocol}_{port}_{service}_CMSeek.ansi | /usr/bin/cmseek --clear-result"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
