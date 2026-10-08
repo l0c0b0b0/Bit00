@@ -17,7 +17,7 @@ class NmapTCPFull:
     async def run(target, tag, output, module):
 
         """Run nmap scan."""
-        cmd = f"nmap -vv -Pn -p- -f --mtu 16 -D RND:5 -T4 --open -O --osscan-guess --osscan-limit --max-os-tries 3 -sV --version-all --traceroute --disable-arp-ping --source-port 53 {target} \
+        cmd = f"nmap -vv -Pn -p- -f --mtu 16 -D RND:5 --min-rate=500 -T4 --open -O --osscan-guess --osscan-limit --max-os-tries 3 -sV --version-all --traceroute --disable-arp-ping --source-port 53 {target} \
 -oG {output}/scans/gnmap/_full_tcp_nmap.gnmap -oN {output}/scans/_full_tcp_nmap.txt -oX {output}/scans/xml/_full_tcp_nmap.xml; "
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
