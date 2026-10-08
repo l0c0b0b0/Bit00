@@ -16,6 +16,6 @@ class Whatweb:
     async def run(target, tag, output, service, protocol, port, module):
             
         """Run whatweb scan."""
-        cmd = f"whatweb  --no-errors -a 3 -v {service}://{target}:{port} 2>&1 | tee {output}/scans/{protocol}_{port}_{service}_whatweb.ansi"
+        cmd = f"/usr/bin/whatweb --no-errors -a 3 -v {service}://{target}:{port} 2>&1 | tee {output}/scans/{protocol}_{port}_{service}_whatweb.ansi"
         
         return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
