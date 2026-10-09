@@ -8,7 +8,7 @@ class SublisterPorts:
     """Sublist3r enumeration TCP ports."""
     name: str = "SublisterPorts"
     description: str = "Sublist3r TCP Port reconnaissance"
-    tag: List[str] = field(default_factory=lambda: ["ipnet", "SublisterPorts"])
+    tag: List[str] = field(default_factory=lambda: ["subdomain", "SublisterPorts"])
     supported_modules: List[str] = field(default_factory=lambda: ["osint"])
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = False
