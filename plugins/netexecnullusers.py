@@ -10,7 +10,7 @@ class NetexecNullusers:
     description: str = "ldap scanning with netexec-nullusers"
     tag: List[str] = field(default_factory=lambda: ["scans", "NetexecNullusers"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl'))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl', '^ldapssl?'))
     run_once: bool = False
         
 

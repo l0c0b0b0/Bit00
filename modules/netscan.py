@@ -85,7 +85,7 @@ class netscan:
     
         secure_ports = {
             '443':'https', '465':'smtp', '563':'nntp', '585':'imaps', '593':'msrpc', 
-            '636':'ldap', '989':'ftp', '990':'ftp', '992':'telnet', '993':'imaps', 
+            '636':'ldapssl', '989':'ftp', '990':'ftp', '992':'telnet', '993':'imaps', 
             '995':'pop3s', '2484':'oracle', '5061':'asterisk', '5986':'wsman'
         }
     

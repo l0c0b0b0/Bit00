@@ -10,7 +10,7 @@ class LdapsearchAnonymous:
     description: str = "ldap scanning with ldapsearch-anonymous"
     tag: List[str] = field(default_factory=lambda: ["scans", "LdapsearchAnonymous"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl'))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl', '^ldapssl?'))
     run_once: bool = False
         
     async def run(target, tag, output, service, protocol, port, module, semaphore, lock):

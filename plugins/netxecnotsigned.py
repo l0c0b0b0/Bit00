@@ -10,7 +10,7 @@ class NetxecNotsigned:
     description: str = "ldap scanning with netxec-notsigned"
     tag: List[str] = field(default_factory=lambda: ["scans", "NetxecNotsigned"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl'))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl', '^ldapssl?'))
     run_once: bool = False
         
    

@@ -10,7 +10,7 @@ class NucleiLdap:
     description: str = "ldap scanning with nuclei-ldap"
     tag: List[str] = field(default_factory=lambda: ["scans", "NucleiLdap"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap',))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl', '^ldapssl?'))
     run_once: bool = False
         
     

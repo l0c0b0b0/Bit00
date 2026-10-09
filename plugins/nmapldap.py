@@ -10,7 +10,7 @@ class NmapLdap:
     description: str = "ldap scanning with nmap-ldap"
     tag: List[str] = field(default_factory=lambda: ["scans", "NmapLdap"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap',))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl', '^ldapssl?'))
     run_once: bool = False
         
     
