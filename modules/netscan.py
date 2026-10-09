@@ -231,10 +231,7 @@ class netscan:
             return None, None, None
     
     async def execute_async(self):
-        """Async execution for PORTSCAN"""
-        # ---- CREATE LOOP-BOUND PRIMITIVES HERE ----
-        self.semaphore = asyncio.Semaphore(int(os.getenv('CONCURRENT_SCANS', '5')))
-        self.lock = asyncio.Lock()
+        """Async execution for PORTSCAN"""    
         await self.portscan()
         
         while self.pending:
@@ -283,7 +280,10 @@ class netscan:
     async def execute(self, target, args):
         """Main execution method"""
         self.target = target
-
+        # ---- CREATE LOOP-BOUND PRIMITIVES HERE ----
+        self.semaphore = asyncio.Semaphore(int(os.getenv('CONCURRENT_SCANS', '5')))
+        self.lock = asyncio.Lock()
+        
         start_time = time.time()
 
         try:

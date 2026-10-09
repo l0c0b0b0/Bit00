@@ -122,7 +122,9 @@ class osint:
                                 target=target_value,
                                 output = self.basedir,
                                 tag = props["tag"],
-                                module = module)
+                                module = module,
+                                semaphore=self.semaphore,
+                                lock=self.lock)
                                 )
                             )
                     except Exception as e:
@@ -146,7 +148,9 @@ class osint:
                         target= self.target,
                         output = self.basedir, 
                         tag = props["tag"], 
-                        module = module
+                        module = module,
+                        semaphore=self.semaphore,
+                        lock=self.lock
                         )
                     )
                 )
@@ -222,6 +226,10 @@ class osint:
     async def execute(self, target, args):
         
         """Main execution method"""
+        # ---- CREATE LOOP-BOUND PRIMITIVES HERE ----
+        self.semaphore = asyncio.Semaphore(int(os.getenv('CONCURRENT_SCANS', '5')))
+        self.lock = asyncio.Lock()
+
         start_time = time.time()
         try:
             self.set_target_type(target)
