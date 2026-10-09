@@ -84,14 +84,22 @@ echo "[+] Installing OSINT Tools:"
 echo "[+] Installing NETSCAN Tools:"
 /usr/bin/sudo apt install -y seclists dnsrecon naabu enum4linux feroxbuster gobuster impacket-scripts nbtscan nmap redis-tools smbclient smbmap snmp sslscan sipvicious whatweb cmseek nuclei netexec ffuf
 
+# Modify Sublist3r, avoid errors
+echo ""
+echo "[++] Modify Sublist3r fixing multiprocessing fork"
+FILE="/usr/lib/python3/dist-packages/sublist3r.py"
+LINE="multiprocessing.set_start_method('fork', force=True)"
+
+# Only add if not already present
+grep -qF "$LINE" "$FILE" || sed -i "/^import multiprocessing$/a $LINE" "$FILE"
 
 # Update nuclei an another tools
 echo ""
-echo "Update nuclei templates:"
+echo "[+] Update nuclei templates:"
 /usr/bin/sudo apt install --only-upgrade nuclei
 /usr/bin/sudo /usr/bin/nuclei -update-templates
 
-echo "Upgrade tools:"
+echo "[+] Upgrade tools:"
 echo ""
 /usr/bin/sudo apt install --only-upgrade seclists impacket-scripts nmap cmseek netexec
 
