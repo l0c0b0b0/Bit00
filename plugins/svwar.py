@@ -13,9 +13,9 @@ class Svwar:
     services_matches: Tuple[str, ...] = field(default=('^asterisk',))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run svwar scan."""
         cmd = f"svwar -D -m INVITE -p {port} {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

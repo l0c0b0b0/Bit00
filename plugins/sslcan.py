@@ -13,9 +13,9 @@ class SSLScan:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run showmount scan."""
         cmd = f"sslscan --show-certificate --no-colour {target}:{port} 2>&1 | tee {output}/scans/{protocol}_{port}_sslscan.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

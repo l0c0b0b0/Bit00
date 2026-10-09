@@ -15,9 +15,9 @@ class NmapCassandra:
         
 
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run nmap-cassandra scan."""
         cmd = f"nmap -vv -Pn -sV  -p {port} --script=\"banner,(cassandra* or ssl*) and not (brute or broadcast or dos or external or fuzzer)\" -oN {output}/scans/{protocol}_{port}_cassandra_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_cassandra_nmap.xml {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

@@ -13,9 +13,9 @@ class OracleTnscmdVersion:
     services_matches: Tuple[str, ...] = field(default=('^oracle',))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run oracle-tnscmd-version scan."""
         cmd = f"tnscmd10g version -h {target} -p {port} 2>&1 | tee {output}/scans/{protocol}_{port}_oracle_tnscmd_version.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

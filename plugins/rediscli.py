@@ -13,9 +13,9 @@ class RedisCli:
     services_matches: Tuple[str, ...] = field(default=('^redis$',))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run redis-cli scan."""
         cmd = f"redis-cli -p {port} -h {target} CONFIG GET \"*\" | tee {output}/scans/{protocol}_{port}_redis_config.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

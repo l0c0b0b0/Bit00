@@ -12,11 +12,11 @@ class Sublister:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = False
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         cmd = f"/usr/bin/sublist3r --verbose --no-color --domain {target} -o {output}/scans/recon/sublist3r_{target}.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   

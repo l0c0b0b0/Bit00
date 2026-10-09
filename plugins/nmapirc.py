@@ -13,10 +13,10 @@ class NmapIrc:
     services_matches: Tuple[str, ...] = field(default=('^imap', '^irc'))
     run_once: bool = False
            
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
      
             
         """Run nmap-irc scan."""
         cmd = f"nmap -vv -Pn -sV --script irc-botnet-channels,irc-info,irc-unrealircd-backdoor -oN {output}/scans/{protocol}_{port}_irc_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_irc_nmap.xml -p {port} {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

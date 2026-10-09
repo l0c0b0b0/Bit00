@@ -13,9 +13,9 @@ class NucleiTelnet:
     services_matches: Tuple[str, ...] = field(default=('^telnet',))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run nmap-telnet scan."""
         cmd = f"/usr/bin/nuclei -no-color -silent -no-interactsh -target {target}:{port} -tags telnet,cve,misconfig,exposure -rate-limit 50 -concurrency 5 -retries 5 -max-host-error 5 -no-httpx -o {output}/scans/{protocol}_{port}_{service}_nuclei.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

@@ -14,9 +14,9 @@ class Enum4linux:
     run_once: bool = True
         
     
-    async def run(self, target, tag, output, service, protocol, port, module):
+    async def run(self, target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run enum4linux scan."""
         cmd = f"/usr/bin/enum4linux -a -M -l -d {target} 2>&1 | tee {output}/scans/{protocol}_{port}_smb_enum4linux.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

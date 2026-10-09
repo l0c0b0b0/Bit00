@@ -14,11 +14,11 @@ class CurlGeolocation:
     run_once: bool = False
 
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         cmd = f"/usr/bin/curl  http://ip-api.com/json/{target} | tee {output}/scans/info/geolocation_ipapi_{target}.json"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   

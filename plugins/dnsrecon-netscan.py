@@ -14,8 +14,8 @@ class DNSRegistersRecon:
     run_once: bool = True
 
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
 
         cmd  = f"/usr/bin/dnsrecon -a -b -d {target} -c {output}/scans/{protocol}_{port}_{service}_dnsrecon.csv"
 
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

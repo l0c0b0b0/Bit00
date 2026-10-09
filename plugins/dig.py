@@ -14,9 +14,9 @@ class Dig:
     run_once: bool = False
         
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run dig scan."""
         cmd = f"dig -p {port} -x {target} @{target} | tee {output}/scans/{protocol}_{port}_{service}_revlookup.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

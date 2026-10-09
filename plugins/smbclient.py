@@ -13,9 +13,9 @@ class Smbclient:
     services_matches: Tuple[str, ...] = field(default=('^smb', '^microsoft-ds', '^netbios'))
     run_once: bool = True
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run smbclient scan."""
         cmd = f"smbclient -L\\\\ -N -I {target} 2>&1 | tee {output}/scans/{protocol}_{port}_smb_smbclient.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

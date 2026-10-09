@@ -10,13 +10,13 @@ class LdapsearchAnonymous:
     description: str = "ldap scanning with ldapsearch-anonymous"
     tag: List[str] = field(default_factory=lambda: ["scans", "LdapsearchAnonymous"])
     supported_modules: List[str] = field(default_factory=lambda: ["netscan"])
-    services_matches: Tuple[str, ...] = field(default=('^ldap',))
+    services_matches: Tuple[str, ...] = field(default=('^ldap', '^ldapssl'))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
 
             
         """Run ldapsearch-anonymous scan."""
         cmd = f"ldapsearch -x -H ldap://{target}:{port} -b \"dc=*******,dc=***\" \"(objectClass=*)\" | tee {output}/scans/{protocol}_{port}_{service}_ldapsearch.ansi"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

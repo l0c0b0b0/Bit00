@@ -13,9 +13,9 @@ class NmapMsrpc:
     services_matches: Tuple[str, ...] = field(default=('^msrpc', '^rpcbind', '^erpc'))
     run_once: bool = False
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run nmap-msrpc scan."""
         cmd = f"nmap -vv -Pn -sV -p {port} --script=\"banner,msrpc-enum,rpc-grind,rpcinfo\" -oN {output}/scans/{protocol}_{port}_rpc_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_rpc_nmap.xml {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

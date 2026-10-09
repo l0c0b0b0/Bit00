@@ -14,10 +14,10 @@ class NetexecSpiderplus:
     run_once: bool = False
         
    
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
 
         """Run netexec-spiderplus scan."""
         cmd = f"netexec smb {target} -u '' -p '' -M spider_plus -o OUTPUT_FOLDER='{output}/scans/' EXCLUDE_FILTER='print$,ipc$,SYSVOL,NETLOGON' &&\
             mv {output}/scans/{target}.json {output}/scans/{protocol}_{port}_smb_netexec_shares.json"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

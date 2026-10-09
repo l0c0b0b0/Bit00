@@ -14,9 +14,9 @@ class NetexecGuestauth:
     run_once: bool = True
         
      
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run netexec-guestauth scan."""
         cmd = f"netexec smb {target} -u 'guest' -p '' --log '{output}/scans/{protocol}_{port}_smb_netexec_guestauth.ansi"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

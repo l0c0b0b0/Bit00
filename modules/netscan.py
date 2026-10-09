@@ -179,7 +179,10 @@ class netscan:
                         service = service,
                         protocol = protocol,
                         port = port,
-                        module = module)
+                        module = module,
+                        semaphore=self.semaphore,
+                        lock=self.lock     
+                        )
                     )
                 )
             except Exception as e:
@@ -204,7 +207,9 @@ class netscan:
                         target= self.target,
                         output = self.basedir, 
                         tag = props["tag"], 
-                        module = module
+                        module = module,
+                        semaphore=self.semaphore,
+                        lock=self.lock     
                         )
                     )
                 )
@@ -227,7 +232,9 @@ class netscan:
     
     async def execute_async(self):
         """Async execution for PORTSCAN"""
-
+        # ---- CREATE LOOP-BOUND PRIMITIVES HERE ----
+        self.semaphore = asyncio.Semaphore(int(os.getenv('CONCURRENT_SCANS', '5')))
+        self.lock = asyncio.Lock()
         await self.portscan()
         
         while self.pending:

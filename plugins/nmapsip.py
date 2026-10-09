@@ -14,9 +14,9 @@ class NmapSip:
     run_once: bool = False
         
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run nmap-sip scan."""
         cmd = f"nmap -vv -Pn -sV -p {port} --script=\"banner,sip-enum-users,sip-methods\" -oN {output}/scans/{protocol}_{port}_sip_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_sip_nmap.xml {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

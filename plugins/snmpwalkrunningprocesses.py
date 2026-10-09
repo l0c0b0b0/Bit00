@@ -13,9 +13,9 @@ class SnmpwalkRunningProcesses:
     services_matches: Tuple[str, ...] = field(default=('^snmp',))
     run_once: bool = True
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run snmpwalk-running-processes scan."""
         cmd = f"snmpwalk -c public -v 2c {target} 1.3.6.1.2.1.25.4.2.1.2 2>&1 | tee {output}/scans/{protocol}_{port}_snmp_snmpwalk_processes.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

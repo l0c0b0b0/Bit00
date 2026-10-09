@@ -13,9 +13,9 @@ class Showmount:
     services_matches: Tuple[str, ...] = field(default=('^nfs', '^rpcbind'))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run showmount scan."""
         cmd = f"showmount -e {target} 2>&1 | tee {output}/scans/{protocol}_{port}_showmount.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

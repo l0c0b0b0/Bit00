@@ -14,9 +14,9 @@ class NmapMssql:
     run_once: bool = False
         
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run nmap-mssql scan."""
         cmd = f"nmap -vv -Pn -sV -p {port} --script=\"banner,(ms-sql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)\" --script-args=\"mssql.instance-port={port},mssql.username=sa,mssql.password=sa\" -oN {output}/scans/{protocol}_{port}_mssql_nmap.txt -oX {output}/scans/xml/{protocol}_{port}_mssql_nmap.xml {target}"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

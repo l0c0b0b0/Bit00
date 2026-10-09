@@ -13,14 +13,14 @@ class TheHarvester:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = True
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         
         cmd = f"/usr/bin/theHarvester -b all -a -q -d {target} -f {output}/scans/info/full_theharvester_{target}.ansi"
 
        
 
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   

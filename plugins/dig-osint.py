@@ -14,9 +14,9 @@ class DigEnum:
     run_once: bool = False
         
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
             
         """Run dig scan."""
         cmd = f"/usr/bin/dig {target} | tee {output}/scans/recon/revdns_dig_{target}.ansi"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

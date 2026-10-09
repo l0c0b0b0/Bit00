@@ -15,9 +15,9 @@ class CurlRobots:
         
    
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run curl-robots scan."""
         cmd = f"curl -sSik {service}://{target}:{port}/robots.txt -m 10 2>&1 | tee {output}/scans/{protocol}_{port}_{service}_robots.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

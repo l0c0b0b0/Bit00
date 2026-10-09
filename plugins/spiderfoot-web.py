@@ -12,11 +12,11 @@ class SpiderfootWeb:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = False
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         cmd = f"/usr/bin/spiderfoot -t WEBSERVER_BANNER,WEBSERVER_TECHNOLOGY,WEB_ANALYTICS_ID,TARGET_WEB_CONTENT_TYPE,TARGET_WEB_COOKIE -f -x -q -r -s {target} -o csv | tee {output}/scans/tech/web_spiderfoot_{target}.ansi"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   

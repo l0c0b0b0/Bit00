@@ -10,11 +10,12 @@ from colorama import Fore, Style
 from helpers.logger import log_command, log_error, log_pattern
 from loaders.patternsloaders import PatternsLoader
 
-from core.config import SEMAPHORE, LOCK, RUNNING_TASKS
+from core.config import RUNNING_TASKS
 
 
 class RegexPatterns:
-    def __init__(self, patterns: list):
+    def __init__(self, patterns: list, lock: asyncio.Lock):
+        self.lock = lock
         self.patterns = patterns
      
     def normalize_matches(match):
@@ -146,7 +147,7 @@ class RegexPatterns:
                         continue
 
                 # ensure we store a list of names per IP
-                async with LOCK:
+                async with self.lock:
                     if _ip not in matches:
                         matches[_ip] = [_xydomain]
                         log_pattern(output, tag, "domain2ip", f"{_ip} => {_xydomain}")
@@ -206,7 +207,7 @@ class RegexPatterns:
                 #print(proto, port,service,version)
                 _match = await self.parse_service_line(line)
                 
-                async with LOCK:
+                async with self.lock:
                     if _match:
                         port, _service, _version, _ttl = _match
                         #print(f"[===] {proto}/{port}/{_service} => ({_ttl}) {_version}")
@@ -268,7 +269,7 @@ class RegexPatterns:
                     continue
                 
                 
-                async with LOCK:
+                async with self.lock:
                     if "SublisterPorts" in tag:
                         domain, ports = self.normalize_matches(match)
                         info("Found pattern: {bgreen}{tool}:{target}:{rst}"+ "{bmagenta}" + desc.replace('{_match}') + "{rst}",
@@ -288,7 +289,7 @@ class RegexPatterns:
                     
 
 
-async def runcommand(cmd, tag, output, module):
+async def runcommand(cmd, tag, output, module, semaphore, lock):
     """Generic command runner with pattern matching"""
     tool = None
     info('Running {bgreen}{tool}{rst} against: {byellow}{target}{rst}',
@@ -307,10 +308,10 @@ async def runcommand(cmd, tag, output, module):
     
     p_patterns = PatternsLoader(module)
     patterns = p_patterns.get_patterns_by_name(tag[0], tool)
-    regex_pattern = RegexPatterns(patterns)
+    regex_pattern = RegexPatterns(patterns, lock=lock)
 
 
-    async with SEMAPHORE:
+    async with semaphore:
         
         log_command(output, tag, str(cmd))
         start_time = time.time()
@@ -321,7 +322,7 @@ async def runcommand(cmd, tag, output, module):
                 executable='/bin/bash'
             )
             
-        async with LOCK:
+        async with lock:
             RUNNING_TASKS.append(tag)
 
             #return process.stdout, process.stderr
@@ -339,7 +340,7 @@ async def runcommand(cmd, tag, output, module):
 
         await process.wait()
 
-        async with LOCK:
+        async with lock:
             if tag in RUNNING_TASKS:
                 RUNNING_TASKS.remove(tag)
 
@@ -349,7 +350,7 @@ async def runcommand(cmd, tag, output, module):
         if returncode != 0:
             error('Task {bred}{tag}{rst} on {byellow}{target}{rst} returned non-zero exit code: {returncode}',
                       tag=tag, target=tag[2], returncode=returncode)
-            async with LOCK:
+            async with lock:
                 log_error(output, tag, returncode)
         else:
             info('Task {bblue}{tool}{rst} on {byellow}{target}{rst} finished successfully in {elapsed_time}',

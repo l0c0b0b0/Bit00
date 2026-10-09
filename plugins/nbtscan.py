@@ -14,9 +14,9 @@ class Nbtscan:
     run_once: bool = True
         
     
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
                   
         """Run nbtscan scan."""
         cmd = f"nbtscan -rvh {target} 2>&1 | tee {output}/scans/{protocol}_{port}_smb_nbtscan.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

@@ -15,10 +15,10 @@ class AmassRevLookUp:
     run_once: bool = True
 
 
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
       
         cmd = f"/usr/bin/amass intel -v -max-dns-queries 500 -timeout 10 -cidr {target} -d gob.bo -o {output}/scans/recon/revlook_amass_{target}.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
 
  

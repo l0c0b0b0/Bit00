@@ -12,11 +12,11 @@ class SpiderfootEmail:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = True
     
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         cmd = f"/usr/bin/spiderfoot -t EMAILADDR,EMAILADDR_COMPROMISED,EMAILADDR_DELIVERABLE,EMAILADDR_GENERIC,MALICIOUS_EMAILADDR -x -q -r -s {target} | tee {output}/scans/info/email_spiderfoot_{target}.ansi"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   

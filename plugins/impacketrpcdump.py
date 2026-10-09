@@ -13,9 +13,9 @@ class ImpacketRpcdump:
     services_matches: Tuple[str, ...] = field(default=('^msrpc', '^rpcbind', '^erpc'))
     run_once: bool = False
           
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run impacket-rpcdump scan."""
         cmd = f"impacket-rpcdump -port {port} {target} | tee {output}/scans/{protocol}_{port}_rpc_rpcdump.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

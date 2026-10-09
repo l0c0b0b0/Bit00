@@ -13,9 +13,9 @@ class OracleTnscmdPing:
     services_matches: Tuple[str, ...] = field(default=('^oracle',))
     run_once: bool = False
         
-    async def run(target, tag, output, service, protocol, port, module):
+    async def run(target, tag, output, service, protocol, port, module, semaphore, lock):
             
         """Run oracle-tnscmd-ping scan."""
         cmd = f"tnscmd10g ping -h {target} -p {port} 2>&1 | tee {output}/scans/{protocol}_{port}_oracle_tnscmd_ping.txt"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)

@@ -12,11 +12,11 @@ class AsnNet:
     services_matches: Tuple[str, ...] = field(default_factory=tuple)
     run_once: bool = False
         
-    async def run(target, tag, output, module):
+    async def run(target, tag, output, module, semaphore, lock):
 
         cmd = f"/usr/bin/asn -s -m -J {target} | tee {output}/scans/tech/net_asn_{target}.json"
         
-        return await runcommand(cmd=cmd, tag=tag, output=output, module=module)
+        return await runcommand(cmd=cmd, tag=tag, output=output, module=module, semaphore=semaphore, lock=lock)
         
 
   
